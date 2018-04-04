@@ -9,17 +9,17 @@ Logiciel de dessin collaboratif en réseau pour le module M4102C.
 
 Pour lancer le serveur, utilisez simplement :
 
-	java serveur.Serveur <port>
+	java Serveur <port>
 
 #### Lancer un client
 
 Pour lancer un client, tapez la commande :
 
-    java ihm.Connexion
+    java ihm.Accueil
     
 Vous pouvez aussi indiquer directement l'adresse, le port, et votre pseudo :
 
-    java ihm.Connexion localhost 4567 richard
+    java ihm.Accueil localhost 4567 richard
 
 ### Si vous utilisez les JAR ...
 

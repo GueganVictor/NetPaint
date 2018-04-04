@@ -3,7 +3,7 @@
  * et interfaces graphiques montrés à l'utilisateur.
  *
  * <ul>
- *     <li>{@link ihm.Connexion} : représente l'écran de connexion à un serveur.</li>
+ *     <li>{@link ihm.Accueil} : représente l'écran de connexion à un serveur.</li>
  *     <li>{@link ihm.FenetreDessin} : représente l'interface de dessin présentée à l'utilisateur.</li>
  *     <li>{@link ihm.Forme} : représente une forme sur l'espace de dessin.</li>
  * </ul>
