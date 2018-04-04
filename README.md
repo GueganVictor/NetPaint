@@ -5,11 +5,24 @@ BLONDEL Richard, JEAN Arthur, GUEGAN Victor
 
 Logiciel de dessin collaboratif en réseau pour le module M4102C.
 
+### Si vous utilisez les JAR ...
+Vous pouvez simplement le jar sans paquetage :
+
+    java -jar NetPaint.jar
+
+Ou double click sur Windows.
+
+### Si vous utilisez les classes ...
+
 #### Lancer le serveur
+
+
 
 Pour lancer le serveur, utilisez simplement :
 
-	java Serveur <port>
+    java ihm.Accueil 
+
+Puis rentrez le port du serveur et cliquez sur "Créer serveur".
 
 #### Lancer un client
 
@@ -17,13 +30,8 @@ Pour lancer un client, tapez la commande :
 
     java ihm.Accueil
     
+Puis rentrez votre pseudo, l'adresse et le port du serveur et cliquez sur "Rejoindre".
+    
 Vous pouvez aussi indiquer directement l'adresse, le port, et votre pseudo :
 
-    java ihm.Accueil localhost 4567 richard
-
-### Si vous utilisez les JAR ...
-
-Vous pouvez simplement les lancer sans indiquer les paquetages :
-
-    java -jar NetPaintServeur.jar <port>
-    java -jar NetPaintClient.jar
+    java ihm.Accueil localhost 8200 Jackie

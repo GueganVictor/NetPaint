@@ -1,5 +1,9 @@
 package serveur;
 
+import client.Client;
+import ihm.FenetreDessin;
+import ihm.FenetreServeur;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -30,6 +34,8 @@ public class Serveur extends Thread {
 	 */
 	private ArrayList<ConnexionClient> clients;
 
+	private FenetreServeur fenetreServeur;
+
 	private boolean enFonctionnement;
 
 	/**
@@ -43,11 +49,16 @@ public class Serveur extends Thread {
 		try {
 			socket = new ServerSocket(port);
 			enFonctionnement = true;
+			fenetreServeur = new FenetreServeur(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		clients = new ArrayList<>();
+	}
+
+	public void majIHM(String commande) {
+		fenetreServeur.traiterMessage(commande);
 	}
 
 	/**
@@ -64,7 +75,7 @@ public class Serveur extends Thread {
 	 *
 	 * @param commande la commande à transmettres aux clients.
 	 */
-	void envoyerClients(String commande) {
+	public void envoyerClients(String commande) {
 		for (ConnexionClient client : clients) {
 			client.envoyer(commande);
 		}
@@ -98,7 +109,7 @@ public class Serveur extends Thread {
 	/**
 	 * Arrête le serveur et ferme son socket.
 	 */
-	private void arreterServeur() {
+	public void arreterServeur() {
 		enFonctionnement = false;
 
 		try {

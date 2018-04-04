@@ -86,8 +86,12 @@ class ConnexionClient extends Thread {
 					enFonctionnement = false;
 					break;
 				}
-
-				serveur.envoyerClients(commande);
+				if (!commande.contains(",")) {
+					serveur.majIHM(commande);
+				} else {
+					serveur.majIHM(commande);
+					serveur.envoyerClients(commande);
+				}
 			}
 
 			in.close();

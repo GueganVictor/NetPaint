@@ -92,7 +92,7 @@ public class Client extends Thread {
 				System.out.println("commande = " + message);
 
 				// Lors de la déconnexion, on reçoit un message qui vaut null ...
-				if (message != null) traiterMessage(message);
+				if (message != null && message.contains(",")) traiterMessage(message);
 			}
 
 			in.close();
