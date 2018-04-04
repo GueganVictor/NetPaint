@@ -41,11 +41,7 @@ public class FenetreDessin extends JFrame implements ActionListener {
 	private JTextField textMessage;
 	private JTextArea textZoneChat;
 
-	private JTextField largeur;
-	private JLabel labelLargeur;
-	private JTextField hauteur;
-	private JLabel labelHauteur;
-
+	private int xDepart, yDepart;
 
 	private ColorChooserButton choixCouleur;
 	private Color couleurDessin = Color.DARK_GRAY;
@@ -70,64 +66,10 @@ public class FenetreDessin extends JFrame implements ActionListener {
 		 * @param e l'événement souris qui a déclenché l'appel à cette méthode.
 		 */
 		public void mouseClicked(MouseEvent e) {
-			int x = e.getX() - 12;
-			int y = e.getY() - 12;
-			Graphics g = this.getGraphics();
-
-			StringBuilder sb = new StringBuilder();
-
-			int largeurint = 0;
-			int hauteurint = 0;
-			try {
-				largeurint = Integer.parseInt(largeur.getText());
-				hauteurint = Integer.parseInt(largeur.getText());
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Vous devez remplir les champs largeur et hauteur !");
-				return;
-			}
-
-			if (largeurint <= 0 || hauteurint <= 0) {
-				JOptionPane.showMessageDialog(this, "Vous avez saisi une largeur ou " +
-						"une hauteur nulle ou négative !");
-			} else {
-				switch (e.getButton()) {
-					case MouseEvent.BUTTON1:
-						g.setColor(couleurDessin);
-						if (radioRempli.isSelected()) {
-							if (radioCercle.isSelected()) {
-								tabForme.add(new Forme(Forme.CERCLE, x, y, largeurint, hauteurint, true, couleurDessin));
-								sb.append(Forme.CERCLE + ",");
-							}
-							if (radioCarre.isSelected()) {
-								tabForme.add(new Forme(Forme.CARRE, x, y, largeurint, hauteurint, true, couleurDessin));
-								sb.append(Forme.CARRE + ",");
-							}
-
-							sb.append("p,");
-						} else {
-							if (radioCercle.isSelected()) {
-								tabForme.add(new Forme(Forme.CERCLE, x, y, largeurint, hauteurint, false, couleurDessin));
-								sb.append(Forme.CERCLE + ",");
-							}
-							if (radioCarre.isSelected()) {
-								tabForme.add(new Forme(Forme.CARRE, x, y, largeurint, hauteurint, false, couleurDessin));
-								sb.append(Forme.CARRE + ",");
-							}
-
-							sb.append("v,");
-						}
-
-						sb.append(x).append(",").append(y).append(",")
-								.append(largeurint).append(",")
-								.append(hauteurint).append(",")
-								.append(Integer.toHexString(choixCouleur.getSelectedColor().getRGB() & 0xFFFFFF));
-
-						client.envoyer(sb.toString());
-						break;
-
+			switch (e.getButton()) {
 					case MouseEvent.BUTTON3:
-						x = e.getX();
-						y = e.getY();
+						int x = e.getX();
+						int y = e.getY();
 
 						for (Forme f : tabForme) {
 							if ((x > f.getX() && x < f.getX() + f.getLargeur()) && (y > f.getY() && y < f.getY() + f.getHauteur())) {
@@ -137,13 +79,66 @@ public class FenetreDessin extends JFrame implements ActionListener {
 
 						break;
 				}
-			}
+
 		}
 
 		public void mousePressed(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON1){
+				xDepart = e.getX(); yDepart = e.getY();
+			}
 		}
 
 		public void mouseReleased(MouseEvent e) {
+			Graphics g = this.getGraphics();
+			StringBuilder sb = new StringBuilder();
+
+			int largeurint, hauteurint, temp;
+			largeurint = e.getX() - xDepart;
+			hauteurint = e.getY() - yDepart;
+			System.out.println("x,y:"+xDepart+","+yDepart+"  -  l,h:"+largeurint+","+hauteurint);
+			if (largeurint < 0) {
+				largeurint = -largeurint;
+				xDepart -= largeurint;
+			}
+			if ( hauteurint < 0) {
+				hauteurint = -hauteurint;
+				yDepart -= hauteurint;
+			}
+			System.out.println(xDepart+","+yDepart+"  -  "+largeurint+","+hauteurint);
+
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				g.setColor(couleurDessin);
+				if (radioRempli.isSelected()) {
+					if (radioCercle.isSelected()) {
+						tabForme.add(new Forme(Forme.CERCLE, xDepart, yDepart, largeurint, hauteurint, true, couleurDessin));
+						sb.append(Forme.CERCLE + ",");
+					}
+					if (radioCarre.isSelected()) {
+						tabForme.add(new Forme(Forme.CARRE, xDepart, yDepart, largeurint, hauteurint, true, couleurDessin));
+						sb.append(Forme.CARRE + ",");
+					}
+
+					sb.append("p,");
+				} else {
+					if (radioCercle.isSelected()) {
+						tabForme.add(new Forme(Forme.CERCLE, xDepart, yDepart, largeurint, hauteurint, false, couleurDessin));
+						sb.append(Forme.CERCLE + ",");
+					}
+					if (radioCarre.isSelected()) {
+						tabForme.add(new Forme(Forme.CARRE, xDepart, yDepart, largeurint, hauteurint, false, couleurDessin));
+						sb.append(Forme.CARRE + ",");
+					}
+
+					sb.append("v,");
+				}
+
+				sb.append(xDepart).append(",").append(yDepart).append(",")
+						.append(largeurint).append(",")
+						.append(hauteurint).append(",")
+						.append(Integer.toHexString(choixCouleur.getSelectedColor().getRGB() & 0xFFFFFF));
+
+				client.envoyer(sb.toString());
+			}
 		}
 
 		public void mouseEntered(MouseEvent e) {
@@ -205,22 +200,6 @@ public class FenetreDessin extends JFrame implements ActionListener {
 		bSupprimer = new JButton("Supprimer");
 		bSupprimer.addActionListener(this);
 		panelDroit.add(bSupprimer, "gaptop 30, center, wrap");
-
-		JPanel jLargeur = new JPanel(new MigLayout());
-		largeur = new JTextField("50");
-		labelLargeur = new JLabel("Largeur :");
-		largeur.setColumns(15);
-		jLargeur.add(labelLargeur);
-		jLargeur.add(largeur, "w 40!");
-
-		JPanel jHauteur = new JPanel(new MigLayout());
-		hauteur = new JTextField("50");
-		labelHauteur = new JLabel("Hauteur :");
-		hauteur.setColumns(15);
-		jHauteur.add(labelHauteur);
-		jHauteur.add(hauteur, "w 40!");
-		panelDroit.add(jLargeur, "gaptop 30");
-		panelDroit.add(jHauteur, "gaptop 30, wrap");
 
 		panelChat = new JPanel();
 		panelChat.setLayout(new MigLayout("", "[][]", "[][]"));
