@@ -20,7 +20,7 @@ Ou double click sur Windows.
 
 Pour lancer le serveur, utilisez simplement :
 
-    java ihm.Accueil 
+    java ihm.Connexion 
 
 Puis rentrez le port du serveur et cliquez sur "Créer serveur".
 
@@ -28,10 +28,10 @@ Puis rentrez le port du serveur et cliquez sur "Créer serveur".
 
 Pour lancer un client, tapez la commande :
 
-    java ihm.Accueil
+    java ihm.Connexion
     
 Puis rentrez votre pseudo, l'adresse et le port du serveur et cliquez sur "Rejoindre".
     
 Vous pouvez aussi indiquer directement l'adresse, le port, et votre pseudo :
 
-    java ihm.Accueil localhost 8200 Jackie
+    java ihm.Connexion localhost 8200 Jackie

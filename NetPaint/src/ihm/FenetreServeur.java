@@ -75,7 +75,7 @@ public class FenetreServeur extends JFrame implements ActionListener {
         textZoneChat = new JTextArea();
         textZoneChat.setColumns(23);
         textZoneChat.setRows(20);
-        textZoneChat.setText("Bienvenue dans le chat");
+        textZoneChat.setText("Bienvenue dans la console serveur !");
         textZoneChat.setBorder(BorderFactory.createCompoundBorder(panelChat.getBorder(),
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
         textZoneChat.setEditable(false);
