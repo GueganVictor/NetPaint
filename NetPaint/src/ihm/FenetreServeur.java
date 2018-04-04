@@ -112,6 +112,7 @@ public class FenetreServeur extends JFrame implements ActionListener {
         textZoneChat.setText(textZoneChat.getText()+"\n"+donnees);
         if (!donnees.contains(",")) {
             if (donnees.equals("stop")) serveur.arreterServeur();
+            if (donnees.equals("clear")) nettoyer();
         } else {
             if (donnees.split(",")[0].equals("chat")) {
                 ecrireMessage(donnees);
@@ -122,6 +123,10 @@ public class FenetreServeur extends JFrame implements ActionListener {
                 dessinerForme(donnees);
             }
         }
+    }
+
+    public void nettoyer() {
+
     }
 
     /**

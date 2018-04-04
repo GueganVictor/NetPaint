@@ -148,13 +148,17 @@ public class Client extends Thread {
 	 * @param donnees le message reçu du serveur.
 	 */
 	private void traiterMessage(String donnees) {
-		if (donnees.split(",")[0].equals("chat")) {
-			fenetreDessin.ecrireMessage(donnees);
-		} else if (donnees.split(",")[0].contains("DEL")) {
-			fenetreDessin.supprimerForme(donnees);
-		}
-		else {
-			fenetreDessin.dessinerForme(donnees);
+		if (!donnees.contains(",")) {
+			if (donnees.equals("clear")) fenetreDessin.nettoyer();
+		} else {
+			if (donnees.split(",")[0].equals("chat")) {
+				fenetreDessin.ecrireMessage(donnees);
+			} else if (donnees.split(",")[0].contains("DEL")) {
+				fenetreDessin.supprimerForme(donnees);
+			}
+			else {
+				fenetreDessin.dessinerForme(donnees);
+			}
 		}
 	}
 

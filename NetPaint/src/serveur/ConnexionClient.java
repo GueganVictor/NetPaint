@@ -88,6 +88,7 @@ class ConnexionClient extends Thread {
 				}
 				if (!commande.contains(",")) {
 					serveur.majIHM(commande);
+					if (commande.equals("clear")) serveur.envoyerClients(commande);
 				} else {
 					serveur.majIHM(commande);
 					serveur.envoyerClients(commande);

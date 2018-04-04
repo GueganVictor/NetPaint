@@ -37,6 +37,8 @@ public class FenetreDessin extends JFrame implements ActionListener {
 
 	private JButton bSupprimer;
 
+	private JButton bNettoyer;
+
 	private JButton bEnvoiMessage;
 	private JTextField textMessage;
 	private JTextArea textZoneChat;
@@ -201,6 +203,10 @@ public class FenetreDessin extends JFrame implements ActionListener {
 		bSupprimer.addActionListener(this);
 		panelDroit.add(bSupprimer, "gaptop 30, center, wrap");
 
+		bNettoyer = new JButton("Nettoyer");
+		bNettoyer.addActionListener(this);
+		panelDroit.add(bNettoyer,"gaptop 5, center");
+
 		panelChat = new JPanel();
 		panelChat.setLayout(new MigLayout("", "[][]", "[][]"));
 
@@ -245,6 +251,10 @@ public class FenetreDessin extends JFrame implements ActionListener {
 
 		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+
+	public void nettoyer() {
+		System.out.println("je suis nettoyer");
 	}
 
 	/**
@@ -345,6 +355,10 @@ public class FenetreDessin extends JFrame implements ActionListener {
 						.append(Integer.toHexString(choixCouleur.getSelectedColor().getRGB() & 0xFFFFFF));
 				client.envoyer(sb.toString());
 			}
+		}
+
+		if (e.getSource().equals(bNettoyer)) {
+			client.envoyer("clear");
 		}
 
 		if (e.getSource().equals(bEnvoiMessage)) {
